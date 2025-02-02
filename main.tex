@@ -1,0 +1,116 @@
+
+\documentclass[12pt]{memoir}
+\setlength{\headheight}{14.80524pt}
+\input{MainLayout/Packages}
+\input{MainLayout/PageLayout}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\renewcommand{\thesection}{\thechapter.\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+% \input{MainLayout/ChapterStyle_Hansen}
+\input{MainLayout/ChapterStyle_daleif1}
+
+\makeatother
+%\chapterstyle{Hansen} %choose your chapter style
+\chapterstyle{daleif1}
+\usepackage{pdfpages} % Place in the preamble, before \begin{document}
+\usepackage[nonumberlist, acronym]{glossaries}
+
+
+\begin{document}
+
+%\setcounter{secnumdepth}{3}
+\thispagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%% Couverture %%%%%%%%%%%%%%%%%
+\include{MainLayout/Couverture}
+\newpage
+\normalsize
+\renewcommand{\contentsname}{} 
+%\begin{flushright}
+\par\noindent\textbf{\huge{\color{blue}Contents}}
+%\end{flushright}
+\tableofcontents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Absract/resumé %%%%%%%%%%%%%%%%%%%%%
+\include{MainLayout/Backpage}
+\newpage
+\normalsize
+
+%%%%%%%%%%%%%%%%%%%%% Liminaires %%%%%%%%%%%%%%%%%
+\include{MainLayout/Liminaires}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Preface %%%%%%%%%%%%%%%%%%%%%
+\linespread{1.5}
+\include{MainLayout/Preface}
+\normalsize
+
+\include{MainLayout/chapter1}
+\newpage
+\normalsize
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Part1 %%%%%%%%%%%%%%%%%%%%%
+\part[Theoretical foundations]{Theoretical foundations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% chapter 1 %%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%% chapter2 %%%%%%%%%%%%%%%%%
+\include{MainLayout/chapter2}
+\newpage
+\normalsize
+%%%%%%%%%%%%%%%%%%%%% chapter3 %%%%%%%%%%%%%%%%%
+\include{MainLayout/chapter3}
+\newpage
+\normalsize
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Part2 %%%%%%%%%%%%%%%%%%%%%
+\part[Validation against clinical data]{Validation against clinical data}
+%%%%%%%%%%%%%%%%%%%%% chapter4 %%%%%%%%%%%%%%%%%
+\include{MainLayout/chapter4}
+\newpage
+\normalsize
+
+%%%%%%%%%%%%%%%%%%%%% chapter5 %%%%%%%%%%%%%%%%%
+\include{MainLayout/chapter5}
+\newpage
+\normalsize
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Part3 %%%%%%%%%%%%%%%%%%%%%
+\part[ Contribution and development methodologies]{ Contribution and development methodologies}
+%%%%%%%%%%%%%%%%%%%%% chapter6 %%%%%%%%%%%%%%%%%
+\include{MainLayout/chapter6}
+\newpage
+\normalsize
+
+%%%%%%%%%%%%%%%%%%%%% chapter7 %%%%%%%%%%%%%%%%%
+\include{MainLayout/chapter7}
+\newpage
+\normalsize
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Part4 %%%%%%%%%%%%%%%%%%%%%
+\part[ Reanalysis, second review]{ Reanalysis, second review}
+%%%%%%%%%%%%%%%%%%%%% chapter8 %%%%%%%%%%%%%%%%%
+\include{MainLayout/chapter8}
+\newpage
+\normalsize
+%%%%%%%%%%%%%%%%%%%%% chapter9 %%%%%%%%%%%%%%%%%
+\include{MainLayout/chapter9}
+\newpage
+\normalsize
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Part5 %%%%%%%%%%%%%%%%%%%%%
+\part[Conclusion]{Conclusion}
+%%%%%%%%%%%%%%%%%%%%% chapter10 %%%%%%%%%%%%%%%%%
+\include{MainLayout/chapter10}
+\newpage
+\normalsize
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Bibliographie %%%%%%%%%%%%%%%%%%%%%
+\urlstyle{same}
+\renewcommand{\bibname}{Bibliography} 
+\bibliographystyle{apacite}
+\bibliography{Bibliography.bib}
+%\nocite{*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Appendices %%%%%%%%%%%%%%%%%%%%%
+\include{MainLayout/Appendices}
+\newpage
+\normalsize
+
+
+
+
+\end{document}

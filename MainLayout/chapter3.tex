@@ -330,7 +330,6 @@ observer_params = {'kernel':['random'],'internal_noise_std':np.arange(0,5.1,0.5)
 experiment_params = {'n_trials': [150,500,1000], 'trial_type': [Int2Trial], 
     'n_features': [6],'external_noise_std': [100]}
 analyser_params = {'internal_noise_extractor':[DoublePass],
-                   'kernel_extractor':[ClassificationImage],
                    'agreement_model_file':['agreement_model_large.csv']}         
                    
 sim_in = Sim(DoublePassExperiment, experiment_params, LinearObserver, observer_params, 

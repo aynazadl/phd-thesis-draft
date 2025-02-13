@@ -108,6 +108,32 @@ As shown in Figure \ref{fig:kernel_perseverating_observer}, increasing the proba
     \label{fig:kernel_perseverating_observer}
 \end{figure}
 
+\begin{tcolorbox}[title=Palin Toolbox: Perseverating observer,
+    colback=white!30!white, colframe=blue!80!white]
+
+\begin{minted}[fontsize=\tiny]{python}
+# Observer parameters define kernel type, internal noise range, decision criteria, 
+# and state transition probabilities (for perseveration).
+observer_params = {'kernel': ['random'],  'internal_noise_std': np.arange(1,5,0.5), 'criteria': [0], 
+    'transition_matrix': [[[0.9, 0.1], [beta, 1 - beta]] for beta in beta_values]}
+# Experiment parameters include trial counts, double-pass trials, stimulus features, 
+# and external noise level.
+experiment_params = {'n_trials':[150], 'n_repeated':[50], 'trial_type': [Int2Trial],
+                     'n_features': [7],'external_noise_std': [100]}
+# Analyzer parameters for internal noise use the Double Pass method.
+analyser_params_noise = {'internal_noise_extractor':[DoublePass],
+                   'agreement_model_file':['agreement_model_large.csv']}   
+# Analyzer parameters for kernel estimation use ClassificationImage and GLMKernel methods.
+analyser_params_kernel = {'kernel_extractor': [ClassificationImage,GLMKernel],'distance': ['CORR']}
+# Simulate internal noise estimation for perseverating observers.                  
+sim_in_perseveration = Sim(DoublePassExperiment, experiment_params, PerseveratingObserver,                          observer_params, InternalNoiseValue, analyser_params_noise)
+# Simulate kernel estimation for perseverating observers.
+sim_kernel_perseveration = Sim(DoublePassExperiment, experiment_params, PerseveratingObserver,                      observer_params, KernelDistance, analyser_params_kernel)
+sim_sim_kernel_perseveration_df = sim_kernel_perseveration.run_all(n_runs=1000) 
+sim_in_perseveration_df = sim_in_perseveration.run_all(n_runs=1000)
+\end{minted}
+
+\end{tcolorbox}
 \subsection{Perseveration effects on internal noise estimation}
 The percentage error in internal noise estimation can also be evaluated for a perseverating observer to determine whether increasing the probability of perseveration impacts estimation accuracy. As shown in Figure \ref{fig:noise_perseverating_observer}, an observer with no perseveration exhibits an estimation error of approximately 40\%, consistent with previous findings in Figures \ref{fig:noise_150} and \ref{fig:internal_noise}. However, as the probability of perseveration increases, the estimation error initially rises gradually before accelerating sharply beyond a threshold of 0.55. Notably, our patient group falls beyond this limit, indicating that higher perseveration levels contribute to significantly greater internal noise estimation errors. This suggests that perseveration disrupts the reliability of internal noise estimation, making it more challenging to accurately capture perceptual variability in perseverating individuals.
 

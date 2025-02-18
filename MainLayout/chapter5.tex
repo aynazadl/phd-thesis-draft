@@ -125,12 +125,14 @@ analyser_params_noise = {'internal_noise_extractor':[DoublePass],
                    'agreement_model_file':['agreement_model_large.csv']}   
 # Analyzer parameters for kernel estimation use ClassificationImage and GLMKernel methods.
 analyser_params_kernel = {'kernel_extractor': [ClassificationImage,GLMKernel],'distance': ['CORR']}
-# Simulate internal noise estimation for perseverating observers.                  
-sim_in_perseveration = Sim(DoublePassExperiment, experiment_params, PerseveratingObserver,                          observer_params, InternalNoiseValue, analyser_params_noise)
+# Simulate internal noise estimation for perseverating observers.
+sim_in_per = Sim(DoublePassExperiment, experiment_params,  PerseveratingObserver, observer_params, 
+                 InternalNoiseValue, analyser_params_noise)
 # Simulate kernel estimation for perseverating observers.
-sim_kernel_perseveration = Sim(DoublePassExperiment, experiment_params, PerseveratingObserver,                      observer_params, KernelDistance, analyser_params_kernel)
-sim_sim_kernel_perseveration_df = sim_kernel_perseveration.run_all(n_runs=1000) 
-sim_in_perseveration_df = sim_in_perseveration.run_all(n_runs=1000)
+sim_kernel_per = Sim(DoublePassExperiment, experiment_params,  PerseveratingObserver, observer_params, 
+                 KernelDistance, analyser_params_kernel)
+sim_kernel_perseveration_df = sim_kernel_per.run_all(n_runs=1000) 
+sim_in_perseveration_df = sim_in_per.run_all(n_runs=1000)
 \end{minted}
 
 \end{tcolorbox}

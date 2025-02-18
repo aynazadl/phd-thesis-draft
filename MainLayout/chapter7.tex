@@ -229,7 +229,7 @@ To assess how removing perseverative trials affects kernel estimation, we compar
     \centering
     \includegraphics[width=16cm]{MainLayout/Images/chapter7/distance.png}
     \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
-    \label{fig:corr_distance}
+    \label{fig:distance}
 \end{figure}
 We further examined the stability of kernel estimation by comparing the GLM kernel before removal with the GLM-HMM kernel after removal within each group. In controls, the correlation between these two versions of the kernel was 0.93, indicating that filtering perseverative trials had minimal impact on kernel structure. However, in patients, the correlation was significantly lower at 0.67, suggesting that removing perseverative trials introduced greater variability in their estimated stimulus-response mapping.  
 
@@ -239,7 +239,7 @@ These findings highlight that while removing perseverative trials refines kernel
     \centering
     \includegraphics[width=14cm]{MainLayout/Images/chapter7/corr.png}
     \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
-    \label{fig:corr_distance}
+    \label{fig:corr}
 \end{figure}
 
 \subsection{Precision of internal noise in engaged state}
@@ -252,18 +252,9 @@ To assess this, we estimated internal noise before and after filtering persevera
     \centering
     \includegraphics[width=16cm]{MainLayout/Images/chapter7/internal_noise_comparison.png}
     \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
-    \label{fig:corr_distance}
+    \label{fig:internal_noise_comparison}
 \end{figure}
 
 These results highlight that while filtering out perseverative trials helps refine internal noise estimates, patients continue to exhibit higher residual variability compared to controls, suggesting that factors beyond perseveration contribute to their impaired decision stability.
 
 
-\section {Discussion} 
-
-The main objective of this chapter was to apply a probabilistic model to detect hidden states in participants' responses. The GLM-HMM model provided a structured approach for estimating posterior state probabilities on a trial-by-trial basis and constructing a transition matrix, which allowed us to analyze the likelihood of participants remaining in or transitioning between states. Unlike traditional signal detection theory tasks, where a ground truth exists and ROC curves can be used to assess performance, our challenge was the absence of a correct response in the reverse correlation experiment. This made it impossible to directly determine how many states participants could switch between. To overcome this, we conducted extensive simulations with known true states, enabling us to optimize model fitting using maximum a posteriori (MAP) estimation by selecting the most appropriate priors.
-
-Applying these optimized priors led to several unexpected findings. Most notably, patients showed a stronger tendency to remain in the perseverative state, making significantly fewer transitions back to an engaged, stimulus-driven decision mode. This suggests that once patients enter a perseverative state, they struggle to re-engage with external sensory information, whereas controls demonstrate greater flexibility, dynamically adjusting their responses based on stimulus input.
-
-One of the key findings in Chapter 4 was that internal noise, rather than just internal representation, plays a major role in differentiating patients from controls. However, we recognized that internal noise estimates from the double-pass method were contaminated by perseveration in patients, leading to inflated values. Thus, a primary goal in this chapter was to assess whether removing perseverative trials would reduce internal noise estimates. Our results confirmed this hypothesis: after filtering out perseverative trials, internal noise values—previously estimated through the confidence interval of the GLM—decreased significantly, supporting the idea that perseveration artificially inflates internal noise measurements in patients.
-
-These findings highlight the importance of distinguishing true internal noise from noise introduced by behavioral biases, reinforcing the need for probabilistic models like GLM-HMM to uncover underlying cognitive states rather than relying solely on traditional psychophysical measures.

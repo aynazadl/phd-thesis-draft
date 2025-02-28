@@ -9,49 +9,151 @@ These findings highlight the importance of distinguishing true internal noise fr
 
 In Chapter \ref{chap3}, we introduced the linear models used to estimate kernels (internal representations through weighted sums and GLMs) in reverse correlation tasks. These models have been applied to various experimental paradigms. Later, in Chapter \ref{chap5}, we discussed the limiting factors affecting their performance.
 
-Our primary objective was to detect perseverative trials and obtain a more accurate estimation of the GLM kernel for engaged trials. However, as discussed in the previous chapter, simply removing perseverative trials does not necessarily improve the similarity of kernel typicality between perseverative patients and controls, figure \ref{fig:kernels_segments_methods} and \ref{fig:kernels_comparisons}showing that after removing perseverative trials, the estimated kernel magnitudes tend to be lower. One possible explanation is that a significant proportion of patient responses occur in the perseverative state. Specifically, while controls have an average of 119 engaged trials out of 150 (80\%), patients have significantly fewer, with only 62 engaged trials out of 150 (41\%).
+Our primary objective was to detect perseverative trials and obtain a more accurate estimation of the GLM kernel for engaged trials. However, as discussed in the previous chapter, simply removing perseverative trials does not necessarily improve the similarity of kernel typicality between perseverative patients and controls, figure \ref{fig:kernels_segments_methods} and \ref{fig:kernels_comparisons} showing that after removing perseverative trials, the estimated kernel magnitudes tend to be lower. One possible explanation is that a significant proportion of patient responses occur in the perseverative state. Specifically, while controls have an average of 119 engaged trials out of 150 (80\%), patients have significantly fewer, with only 62 engaged trials out of 150 (41\%).
 
-This substantial reduction in trial count affects kernel estimation, as a reliable estimation requires at least 200 trials (as demonstrated in Figure \ref{fig:experiment}). Consequently, the loss of trials in perseverative patients limits our ability to obtain robust kernel estimates, highlighting the challenge of accurately characterizing their internal representations.
-
+This substantial reduction in trial count affects kernel estimation, as a reliable estimation requires at least 200 trials (as demonstrated in Figure \ref{fig:experiment}). Consequently, the loss of trials in perseverative patients limits our ability to obtain robust kernel estimates, highlighting the challenge of accurately characterizing their internal representations, as already been shown by the simulation validation in chapter \ref{chap7}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/kernels_segments_methods.png}
+    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/kernels_segments_methods.jpg}
     \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
     \label{fig:kernels_segments_methods}
 \end{figure}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=13cm,height=7cm]{MainLayout/Images/chapter8/kernels_comparisons.png}
-    \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
-    \label{fig:kernels_comparisons}
-\end{figure}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/kernels_methods_participants.png}
-    \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
-    \label{fig:kernels_methods_participants}
-\end{figure}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/kernel_comparison_methods.jpg}
+    \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
+    \label{fig:kernel_comparison_methods}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/kernel_comparison_types_methods.jpg}
+    \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
+    \label{fig:kernel_comparison_methods}
+\end{figure}
 \section{Qualitative impact of new methodologies on Internal noise}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/in_methods_participants.png}
+    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/internal_noise_comparison_types_glms.jpg}
     \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
-    \label{fig:in_methods_participants}
+    \label{fig:internal_noise_comparison_types_glms}
 \end{figure}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/comparison_method.png}
+    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/internal_noise_comparison_glms.jpg}
     \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
-    \label{fig:comparison_method}
+    \label{fig:internal_noise_comparison_glms}
 \end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/internal_noise_comparison_types_glms.jpg}
+    \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
+    \label{fig:internal_noise_comparison_types_glms}
+\end{figure}
+\section{Probability of transition to perseveration as a new biomarker} 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/sticky_state.jpg}
+    \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
+    \label{fig:sticky_state}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/regression_results_per_per.jpg}
+    \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
+    \label{fig:regression_results_per_per}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/regression_results_eng_eng.jpg}
+    \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
+    \label{fig:regression_results_eng_eng}
+\end{figure}
+
 \section{Quantitative impact on old analysis}
 
 \subsection {Correlation with MEC} 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/regression_results_mec.jpg}
+    \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
+    \label{fig:regression_results_mec}
+\end{figure}
 
-\subsection {Correlation with other clinical data} 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/regression_results_mec_c.jpg}
+    \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
+    \label{fig:regression_results_mec_c}
+\end{figure}
 
-\section{Probability of transition to perseveration as a new biomarker} 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/regression_results_mec_r.jpg}
+    \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
+    \label{fig:regression_results_mec_r}
+\end{figure}
 
+\subsection {Correlation with Airtac} 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/regression_results_airtac.jpg}
+    \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
+    \label{fig:regression_results_airtac}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/regression_results_airtac_dur_discr.jpg}
+    \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
+    \label{fig:regression_results_airtac_dur_discr}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/regression_results_airtac_int_discr.jpg}
+    \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
+    \label{fig:regression_results_airtac_int_discr}
+\end{figure}
+\subsection {Correlation with other clinical measures} 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/regression_results_lama_prec.jpg}
+    \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
+    \label{fig:regression_results_lama_prec}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/regression_results_mbea_total.jpg}
+    \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
+    \label{fig:regression_results_mbea_total}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/regression_results_hads.jpg}
+    \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
+    \label{fig:regression_results_hads}
+\end{figure}
 \section{Discussion of the differences} 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/revcor_measures.jpg}
+    \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
+    \label{fig:revcor_measures}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/kernels_segments_subjects_controls.jpg}
+    \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
+    \label{fig:kernels_segments_subjects_controls}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/kernels_segments_subjects_patients.jpg}
+    \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
+    \label{fig:kernels_segments_subjects_patients}
+\end{figure}

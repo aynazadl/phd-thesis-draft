@@ -120,7 +120,7 @@ As in MLE,  in the E-step we compute the posterior probabilities of the latent s
 
 MAP estimation is particularly beneficial when the dataset is limited, as it incorporates prior knowledge to improve generalization and prevent overfitting.
 
-\section {Application on perseverating observer} 
+\section {Fitting GLM-HMM on perseverative observer} 
 This method has already been applied to mice as a descriptive model, demonstrating dynamic switching between an engaged state, where decisions rely on sensory input, and biased states, where errors are more frequent. This study contributed to the development of the SSM (State Space Model) library by Scott Linderman's lab, which I use in my analysis. In \cite{ashwood_mice_2022}, the authors aimed to determine the number of states that best explain movement-based decision-making in mice by minimizing the log-likelihood across subjects. Similar state-space models have been widely used in neuroscience to study movement, motor control, and neural activity, capturing underlying dynamical structures in behavior. Unlike Ashwood et al.2022 study, where state transitions were inferred from known correct responses, we do not have ground truth for state switching or the correct response in the reverse correlation experiment. To overcome this limitation, we use the Palin framework to simulate multiple perseverating observers with known true states, allowing us to validate the switching algorithm.
 Our GLM-HMM model takes as inputs the difference in features between manipulated stimuli in each trial and an additional covariate—the observer's previous choice. If an observer’s response at trial\( t \) is identical to their response at trial \( t-1 \), and this choice is not based on the stimulus representation, they are classified in the perseverative state. Conversely, if their choice is influenced by the stimulus, they are classified in the engaged state. Our goal is to determine, for each trial, whether the observer is in the engaged or perseverative state, providing a state-based interpretation of decision-making behavior while drawing parallels with motor control impairments.
 \begin{figure}[H]
@@ -136,8 +136,6 @@ With Maximum Likelihood Estimation (MLE), we consistently observe nonzero weight
 
 \subsection {Estimation methods-MAP} 
 To overcome these limitations, Maximum A Posteriori (MAP) estimation is essential, as it allows us to incorporate structured priors that guide the learning process and prevent state ambiguity. To ensure that MAP correctly distinguishes between engaged and perseverative states, we designed a systematic validation approach by simulating multiple perseverating observers in PALIN with a known ground truth of state transitions, to optimize priors for both GLM weights (Gaussian priors) and transition probabilities (Dirichlet priors). Since prior selection significantly influences state recovery, we leveraged Bayesian optimization to explore a broad set of parameter values and identify those that best facilitate the separation of latent states. This controlled setup enabled us to test how well different prior distributions influence model convergence and state recovery.
-
-
 \begin{figure}[H]
     \centering
     \includegraphics[width=15cm]{MainLayout/Images/chapter7/glm_perstate.jpg}
@@ -150,10 +148,16 @@ To overcome these limitations, Maximum A Posteriori (MAP) estimation is essentia
     \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
     \label{fig:transition}
 \end{figure}
+methods to adjust the hyperparameters,
+\subsection{Bayesian Optimization}
+We put the GLM-HMM model in the condition of real reverse correlation experiment, which was designed with two discrete states, one observed dimension representing responses, and eight input covariates, including stimulus-related features and choice history. The outputs were modeled as binary responses. 
 
-\subsubsection{Bayesian Optimization}
-We put the model in the condition of real reverse correlation experiment, which was designed with two discrete states, one observed dimension representing responses, and eight input covariates, including stimulus-related features and choice history. The outputs were modeled as binary responses. To refine the prior selection in Bayesian optimization the priors for the GLM weights were defined using gaussian distributions wide range of mean $\mu$ and variance $\sigma^2$, while the transition probabilities were controlled using a dirichlet prior with an adjustable concentration parameter $\alpha$.
-\subsubsection{Calculating RMSE}
+Bayesian Optimization was employed as a method to efficiently adjust the hyperparameters of the model, particularly the selection of priors for GLM weights and transition probabilities. Unlike grid search or random search, Bayesian Optimization iteratively refines hyperparameter selection by constructing a probabilistic surrogate model of the objective function and leveraging an acquisition function to guide the search towards optimal hyperparameters.
+
+For the GLM weights, priors were modeled using Gaussian distributions, where the hyperparameters—mean $\mu$ and variance $\sigma^2$—were optimized to balance flexibility and regularization in state-dependent parameter estimation. The transition probabilities were controlled using a Dirichlet prior with an adjustable concentration parameter $\alpha$, which dictated the tendency of the model to remain in the same state or transition between states.
+
+The optimization process aimed to find the best combination of hyperparameters that maximized the likelihood of the observed data while preventing overfitting. By iteratively evaluating different prior configurations and updating the surrogate model, Bayesian Optimization efficiently converged toward the best set of priors without the need for exhaustive search.
+\subsection{Calculating RMSE}
 The posterior state probabilities were computed, and predicted states were compared against the true simulated states to evaluate the accuracy of state recovery. This was assessed through root mean square error (RMSE) measures the difference between true $z$ and predicted latent variables $z$ from the estimators, both in terms of total state recovery and separately for each latent state, and the optimization process selected the priors that minimized RMSE. Additionally, we recorded the log-likelihood of the fitted model to assess its overall fit to the data.
 \begin{figure}[H]
     \centering
@@ -162,8 +166,54 @@ The posterior state probabilities were computed, and predicted states were compa
     \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
     \label{fig:bo_glmhmm}
 \end{figure}
-\section{Validation}
-To apply these priors as to extract the perseverative state from the responses of stroke patients, we averaged the prios as $\mu$ and variance $\sigma^2$, and $\alpha$, and called them best priors $\text{mean value}_{\text{PER}} = 0.91$, $\text{mean value}_{\text{ENG}} = 2.43$, $\sigma_{\text{PER}} = 3.79$, $\sigma_{\text{ENG}} = 2.43$, and $\alpha = 1.82$ , fit the GLM-HMM with these best priors once to each subject, and we can extract the posterior probability of each trial, the transiton matrix and fitted GLM weights. In below we show the results after fitting to two subjects, one healthy participant; the subject remains in the PER state before transitioning fully into the ENG state around trial 40, after which they remain engaged for the rest of the session,transition matrix supports this observation, showing a high probability of staying in either state once entered ($P_{ENG->ENG}=0.96$, $P_{ENG->ENG}=0.99$), indicating stable state dynamics.  the kernel weight comparison shows that the GLM-HMM engaged kernel (red) aligns closely with the control kernel (green), suggesting that this subject's perceptual processing follows a normative pattern average controls. We put one patient example exhibits highly fluctuating posterior probabilities, with frequent transitions between the PER and ENG states throughout the session. This instability suggests that the patient does not maintain a stable engagement with the task, potentially reflecting cognitive impairments such as perseveration,  transition matrix confirms this, with a lower probability of remaining in the ENG state ($P_{ENG->ENG}=0.82$) and a higher likelihood of switching back to PER ($P_{ENG->PER}=0.18$), kernel weight comparison reveals more divergence between the GLM-HMM engaged kernel and the control kernel, indicating that the patient’s perceptual processing differs significantly from normative patterns and also from the kernel estimated before based on the responses on whole trials.  
+
+\section{Validation with perseverating observer}
+To evaluate the effectiveness of the selected priors in minimising RMSE, we assess how accurately the model recovers the true latent states in a simulated reverse correlation experiment with perseverating observers. By comparing the inferred states to the known ground truth, we quantify the extent of estimation errors and determine the reliability of the optimized priors.
+
+\subsection{RMSE of states}
+The plots illustrate that as the true probability of staying in the perseverative state increases, the model becomes more accurate in predicting perseveration. However, RMSE increases for the engaged state, indicating that the model struggles to correctly identify engaged trials when perseveration dominates. When a significant proportion of trials (around 40\%) belong to the engaged state, the model finds it difficult to transition back to engaged once it has classified a sequence as perseverative. However, increasing the number of trials improves overall performance. Ultimately, the total RMSE is primarily driven by the poor fit of the engaged state rather than errors in the perseverative state estimation.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=16cm]{MainLayout/Images/chapter7/sim_rmse.png}
+    \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
+    \label{fig:bo_glmhmm}
+\end{figure}
+\subsection{Precision of kernel in engaged state}
+In this study, we conducted simulations to compare the effectiveness of different methods under varying levels of internal noise and in the presence of a perseverating observer, given their engaged kernel. Both the Classification Image (CI) method and Generalized Linear Model (GLM) estimate the kernel despite the influence of perseverated trials. In contrast, the GLM-Hidden Markov Model (GLM-HMM) explicitly identifies and excludes perseverated trials before estimating the kernel.
+
+However, when the total number of trials is limited (e.g., 150 trials in the entire experiment), GLM-HMM discards a significant portion of data, potentially impacting kernel estimation. As the number of trials increases, the effect of trial exclusion diminishes, allowing GLM-HMM to achieve the same kernel precision as the other two models. Across all methods, kernel precision declines as internal noise levels increase.
+
+When both perseveration and internal noise increase, GLM-HMM becomes more sensitive in detecting and excluding perseverative trials from the engaged state. This results in a divergence between the estimated engaged-state kernel and the kernel computed over all trials when the perseveration probability exceeds 0.6. Unlike CI and GLM, GLM-HMM maintains a slower decline in kernel correlation, indicating that it preserves kernel precision in engaged trials over a broader range of beta values. At very high perseveration probabilities, GLM-HMM even surpasses the other two methods in kernel accuracy, likely due to its ability to better isolate engaged trials from perseverative noise.
+
+Furthermore, previous research has suggested that GLM accuracy declines when internal noise is high. Our results indicate that GLM and CI produce similar kernel patterns, whereas GLM-HMM offers additional insights beyond kernel estimation by capturing posterior state probabilities and state transitions. However, it is important to note that GLM-HMM estimates the kernel exclusively from engaged trials. By detecting and excluding perseverative trials, it reduces the number of trials available for kernel estimation. This trade-off between state separation and trial availability highlights both the strengths and limitations of GLM-HMM in the context of reverse correlation experiments.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=16cm,,height=4cm]{MainLayout/Images/chapter7/sim_kernel_in_trials.jpg}
+    \includegraphics[width=16cm,height=4cm]{MainLayout/Images/chapter7/sim_kernel_in_per_trials.jpg}
+    \includegraphics[width=16cm,height=4cm]{MainLayout/Images/chapter7/sim_kernel_in_per80_trials.jpg}
+    \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
+    \label{fig:kernel_precision_palin}
+\end{figure}
+\subsection{Precision of internal noise in engaged state}
+We conducted another simulation to estimate internal noise, comparing two methods: the Double-Pass method, which estimates noise across repeated trials, and the GLM-HMM method, which estimates noise in engaged trials.
+Our observations indicate that when the number of trials is limited (e.g., 150 trials) and perseveration is low, both methods perform similarly, with neither showing a clear advantage. However, as perseveration increases (e.g., at a probability of 0.6), the GLM-HMM method provides a more accurate estimation of internal noise, while the Double-Pass method remains relatively unchanged.
+At very high levels of perseveration, the Double-Pass method struggles to distinguish different noise levels, leading to false negatives in noise estimation. In contrast, the GLM-HMM method remains sensitive to noise variations, suggesting it is better suited for cases where perseveration is a significant factor.
+Moreover, as the number of trials increases, the difference between the two methods becomes even more pronounced. The GLM-HMM method continues to refine its internal noise estimation, while the Double-Pass method remains stable but does not improve in distinguishing noise levels, further emphasizing the advantage of GLM-HMM in scenarios with high perseveration and larger datasets.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=16cm,,height=4cm]{MainLayout/Images/chapter7/sim_in_trials.jpg}
+    \includegraphics[width=16cm,height=4cm]{MainLayout/Images/chapter7/sim_in_per_trials.jpg}
+    \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
+    \label{fig:IN_precision_palin}
+\end{figure}
+
+\section{Fitting GLM-HMM on reverse correlation experiment}
+
+To apply best priors as to extract the perseverative state from the responses of stroke patients, we averaged the prios as $\mu$ and variance $\sigma^2$, and $\alpha$, and called them best priors $\text{mean value}_{\text{PER}} = 0.91$, $\text{mean value}_{\text{ENG}} = 2.43$, $\sigma_{\text{PER}} = 3.79$, $\sigma_{\text{ENG}} = 2.43$, and $\alpha = 1.82$ , fit the GLM-HMM with these best priors once to each subject, and we can extract the posterior probability of each trial, the transiton matrix and fitted GLM weights. In below we show the results after fitting to two subjects, one healthy participant; the subject remains in the PER state before transitioning fully into the ENG state around trial 40, after which they remain engaged for the rest of the session,transition matrix supports this observation, showing a high probability of staying in either state once entered ($P_{ENG->ENG}=0.96$, $P_{ENG->ENG}=0.99$), indicating stable state dynamics.  the kernel weight comparison shows that the GLM-HMM engaged kernel (red) aligns closely with the control kernel (green), suggesting that this subject's perceptual processing follows a normative pattern average controls. We put one patient example exhibits highly fluctuating posterior probabilities, with frequent transitions between the PER and ENG states throughout the session. This instability suggests that the patient does not maintain a stable engagement with the task, potentially reflecting cognitive impairments such as perseveration,  transition matrix confirms this, with a lower probability of remaining in the ENG state ($P_{ENG->ENG}=0.82$) and a higher likelihood of switching back to PER ($P_{ENG->PER}=0.18$), kernel weight comparison reveals more divergence between the GLM-HMM engaged kernel and the control kernel, indicating that the patient’s perceptual processing differs significantly from normative patterns and also from the kernel estimated before based on the responses on whole trials.  
 \begin{figure}[H]
     \centering
     \includegraphics[width=18cm]{MainLayout/Images/chapter7/subject_1_session_1.png}
@@ -200,7 +250,7 @@ A striking difference emerges when both groups enter the perseverative state. Co
 There is a significant difference between the two groups in the transitions from perseverative to perseverative state  $\text{PERtoPER}$ and and perseverative to engaged state $\text{PERtoENG}$ However, no significant difference is observed in the transitions from engaged to perseverative state $\text{ENGtoPER}$ or engaged to engaged state $\text{ENGtoENG}$.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=14cm]{MainLayout/Images/chapter7/transition_probability.png}
+    \includegraphics[width=14cm]{MainLayout/Images/chapter7/transition_probability.jpg}
     \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
     \label{fig:transition_probability}
 \end{figure}
@@ -208,26 +258,24 @@ There is a significant difference between the two groups in the transitions from
 Another notable finding concerns dwell time, which represents the number of consecutive trials spent in each state. On average, healthy participants remain in the engaged state for 10 trials, whereas stroke patients stay engaged for only 7 trials. In contrast, controls tend to exit the perseverative state quickly, staying in it for an average of just 2 trials, while patients remain in the perseverative state for a significantly longer duration, averaging 10 trials. This suggests that patients not only enter the perseverative state more frequently but also struggle to disengage from it once they are in it.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=12cm]{MainLayout/Images/chapter7/dwell_time_state.png}
+    \includegraphics[width=12cm]{MainLayout/Images/chapter7/dwell_time_state.jpg}
     \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
     \label{fig:dwell_time_state}
 \end{figure}
 Another finding relates to reaction time, which, while not showing a striking difference, still reveals a notable trend. On average, controls respond faster than patients, with reaction times of 1.36 seconds compared to 1.91 seconds for stroke patients. Additionally, both groups tend to respond more quickly when in the engaged state, averaging 1.59 seconds, whereas response times increase in the perseverative state, reaching 1.85 seconds. This suggests that perseveration is associated with slower decision-making, potentially reflecting increased cognitive or motor processing delays.  
 \begin{figure}[H]
     \centering
-    \includegraphics[width=12cm]{MainLayout/Images/chapter7/rt_state.png}
+    \includegraphics[width=12cm]{MainLayout/Images/chapter7/rt_predicted_state.jpg}
     \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
-    \label{fig:rt_state}
+    \label{fig:rt_predicted_state}
 \end{figure}
-
-\subsection{Precision of kernel in engaged state}
-
+\subsection{Weights estimation in engaged state}
 Although patients spend fewer trials in the engaged state, their estimated GLM kernel, which represents their stimulus-driven decision strategy after removing perseverative trials, still differs from the average kernel of controls. This suggests that simply filtering out perseverative trials is not sufficient to fully correct for differences in kernel estimation between groups. While some patients exhibit kernels that more closely resemble those of controls, others continue to show distortions in stimulus-response mapping, despite being classified as engaged. This variability across individuals indicates that factors beyond trial count contribute to differences in kernel precision.  
 
 To assess how removing perseverative trials affects kernel estimation, we compared GLM-estimated kernels before and after filtering out these trials. Among healthy participants, the initial correlation between their GLM kernel and the average control kernel was 0.87, which only slightly decreased to 0.84 after removing perseverative trials. This indicates that perseverative trials introduce some noise, but their removal does not drastically alter kernel estimation in controls. In patients, however, the effect was more pronounced. Before filtering, the correlation between each patient’s GLM kernel and the average control kernel was only 0.22, reflecting a substantial deviation from normative, stimulus-driven responses. After removing perseverative trials, this correlation further dropped to 0.19, suggesting that filtering out these trials does not fully restore a stimulus-driven kernel, and residual distortions remain.  
 \begin{figure}[H]
     \centering
-    \includegraphics[width=16cm]{MainLayout/Images/chapter7/distance.png}
+    \includegraphics[width=16cm]{MainLayout/Images/chapter7/distance.jpg}
     \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
     \label{fig:distance}
 \end{figure}
@@ -237,12 +285,12 @@ These findings highlight that while removing perseverative trials refines kernel
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=14cm]{MainLayout/Images/chapter7/corr.png}
+    \includegraphics[width=14cm]{MainLayout/Images/chapter7/corr.jpg}
     \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
     \label{fig:corr}
 \end{figure}
 
-\subsection{Precision of internal noise in engaged state}
+\subsection{Internal noise estimation in engaged state}
 Beyond kernel estimation, we investigated internal noise as a potential biomarker, a concept thoroughly discussed in Chapter \ref{chap6}. Internal noise quantifies the variability in an observer’s decision-making process that is not directly driven by the stimulus, making it a crucial measure of sensory uncertainty and cognitive stability.
 
 Focusing on the engaged state, where decisions are primarily stimulus-driven, we sought to determine whether internal noise levels remain stable or differ between patients and controls. If internal noise remains significantly elevated in patients, even when perseveration is removed, it could indicate persistent perceptual uncertainty and suggest a broader impairment in sensory integration or cognitive control.
@@ -250,9 +298,9 @@ Focusing on the engaged state, where decisions are primarily stimulus-driven, we
 To assess this, we estimated internal noise before and after filtering perseverative trials, using the confidence interval of the GLM as a measure of variability. Our findings reveal a significant reduction in internal noise after removing perseverative trials, with 80\% of cases (62 out of 78) showing lower internal noise values post-filtering. The average internal noise for controls decreases from 1.4 to 1.06, whereas for patients, it drops more substantially from 7.19 to 2.82. While healthy participants exhibit minimal changes in internal noise, patients show a significant difference before and after filtering, indicating that perseveration contributes significantly to increased internal noise in this group which means 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=16cm]{MainLayout/Images/chapter7/internal_noise_comparison.png}
+    \includegraphics[width=16cm]{MainLayout/Images/chapter7/in_glm_comparison.jpg}
     \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
-    \label{fig:internal_noise_comparison}
+    \label{fig:in_glm_comparison}
 \end{figure}
 
 These results highlight that while filtering out perseverative trials helps refine internal noise estimates, patients continue to exhibit higher residual variability compared to controls, suggesting that factors beyond perseveration contribute to their impaired decision stability.

@@ -125,22 +125,23 @@ For patients negative in repetition (ME-r > 9), kernel similarity was highly sig
 
 \subsection {Correlation with MEC} 
 We analyzed the relationship between GLM-HMM-derived measures and MEC scores to determine whether kernel similarity, internal noise, or transition probabilities were predictive of communication abilities. The regression results (Figure \ref{fig:regression_results_mec}) indicate no significant correlation between MEC scores and kernel similarity (CI, GLM, or HMM), internal noise, or transition probabilities (p > 0.05), suggesting that these metrics do not strongly predict the MEC performance.  
-For kernel similarity, the relationships were positive but non-significant, meaning that higher kernel similarity does not systematically relate to better MEC scores (Kernel CI: $\beta$ = 2.93, p = 0.40; Kernel GLM: $\beta$ = 3.34, p = 0.33; Kernel HMM: $\beta$ = -1.77, p = 0.61). For internal noise, the relationships were negative, indicating that higher internal noise may be associated with lower MEC scores, though not significantly (Old method: $\beta$ = -0.80, p = 0.07; GLM: $\beta$ = -0.26, p = 0.16; HMM: $\beta$ = -0.23, p = 0.60). Transition probabilities also showed no significant correlations, though transition to the engaged state had a weak positive association ($\beta$ = 5.97, p = 0.18), whereas transition to perseveration was not predictive ($\beta$ = 1.04, p = 0.81).
+For kernel similarity, the relationships were positive but non-significant, meaning that higher kernel similarity does not systematically relate to better MEC scores (Kernel CI: $\beta$ = 2.93, p = 0.40; Kernel GLM: $\beta$ = 3.34, p = 0.33; Kernel HMM: $\beta$ = -1.77, p = 0.61). For internal noise, the relationships were negative, indicating that higher internal noise may be associated with lower MEC scores, though not significantly (Old method: $\beta$ = -0.80, p = 0.07; GLM: $\beta$ = -0.26, p = 0.16; HMM: $\beta$ = -0.23, p = 0.60). Notably, the old internal noise measure was nearly significant but is no longer after removing perseverative trials in HMM, suggesting that previously observed effects may have been inflated by perseveration rather than reflecting true perceptual variability.
+
+For transition probabilities, higher transition to the engaged state ($\beta$ = 5.97, p = 0.18) was positively associated with MEC scores, suggesting that more frequent return to an engaged state may weakly relate to better communication ability, though not significantly. Transition to perseveration was also positively associated ($\beta$ = 1.04, p = 0.81), implying that perseverative tendencies do not strongly differentiate MEC performance.
 \begin{figure}[H]
     \centering
     \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/regression_results_mec.jpg}
     \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
     \label{fig:regression_results_mec}
 \end{figure}
-However, when focusing on prosody comprehension (MEC-C, Figure \ref{fig:regression_results_mec_c}), we found a significant correlation between MEC-C and internal noise estimated from the old method ($\beta$ = -0.62, p = 0.043). This suggests that patients with higher internal noise in double-pass trials may experience greater difficulties in prosodic comprehension. 
-Interestingly, internal noise from HMM was not significantly correlated, indicating that the observed relationship in the old method might be driven by perseveration rather than true perceptual instability. This suggests that the old method could be capturing false positive noise due to repeated responses rather than a genuine increase in perceptual variability. No significant relationships were observed for kernel similarity or transition probabilities.
+When focusing on prosody comprehension (MEC-C, Figure \ref{fig:regression_results_mec_c}), we found a significant negative correlation between MEC-C and internal noise from the old method ($\beta$ = -0.62, p = 0.043), suggesting that patients with higher internal noise in double-pass trials may struggle more with prosody comprehension. However, internal noise from HMM was not significantly correlated, implying that this association in the old method might be driven by perseveration rather than true perceptual variability. Kernel similarity (Kernel CI: $\beta$ = 3.25, p = 0.18; Kernel GLM: $\beta$ = 3.29, p = 0.16; Kernel HMM: $\beta$ = -0.19, p = 0.94) and transition probabilities (Perseverative: $\beta$ = 3.83, p = 0.22; Engaged: $\beta$ = 3.27, p = 0.27) showed no significant relationships with prosody comprehension.
 \begin{figure}[H]
     \centering
     \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/regression_results_mec_c.jpg}
     \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
     \label{fig:regression_results_mec_c}
 \end{figure}
-For prosody repetition (MEC-R, Figure \ref{fig:regression_results_mec_r}), no significant relationships were found across any variables, indicating that repetition performance does not correlate with kernel structure, internal noise, or transition probabilities.            
+For prosody repetition (MEC-R, Figure \ref{fig:regression_results_mec_r}), none of the predictors showed a significant relationship with kernel similarity, internal noise, or state transitions (p > 0.05), indicating that repetition performance is not strongly associated with these computational measures. Notably, the old method previously showed a weak negative correlation ($\beta$ = -0.18, p = 0.37), but this relationship is no longer present in HMM ($\beta$ = 0.02, p = 0.93), further suggesting that the previous measure captured perseveration effects rather than genuine perceptual noise.           
 \begin{figure}[H]
     \centering
     \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/regression_results_mec_r.jpg}
@@ -149,21 +150,25 @@ For prosody repetition (MEC-R, Figure \ref{fig:regression_results_mec_r}), no si
 \end{figure}
 
 \subsection {Correlation with Airtac} 
-Regression analysis with AIRTAC (a measure of auditory processing abilities) showed significant relationships between kernel similarity (CI, GLM, HMM) and AIRTAC scores (p < 0.01, Figure \ref{fig:regression_results_airtac}), suggesting that higher kernel similarity is associated with better auditory discrimination performance. Additionally, internal noise from the old method (p = 0.037) was significantly correlated, indicating that higher noise levels in double-pass trials may be linked to poorer auditory discrimination. However, internal noise from GLM, and HMM, as well as transition probabilities, did not show significant relationships (p > 0.05).
+Regression analysis with AIRTAC (auditory processing ability) revealed strong significant relationships between kernel similarity and AIRTAC scores (p < 0.01, Figure \ref{fig:regression_results_airtac}), indicating that higher kernel similarity is associated with better auditory discrimination (Kernel CI: $\beta$ = 12.08, p = 0.009; Kernel GLM: $\beta$ = 11.28, p = 0.007; Kernel HMM: $\beta$ = 12.72, p = 0.003).
+
+For internal noise, the old method was significantly negatively correlated with AIRTAC ($\beta$ = -1.20, p = 0.037), meaning that higher noise in double-pass trials was associated with worse auditory discrimination. However, internal noise in HMM ($\beta$ = -0.46, p = 0.49) and GLM ($\beta$ = -0.20, p = 0.36) were not significantly related, suggesting that after removing perseverative trials, internal noise no longer predicts auditory processing abilities.
+
+For transition probabilities, higher transition to the engaged state ($\beta$ = 5.17, p = 0.51) was positively associated with AIRTAC, suggesting that patients who return to engagement more frequently tend to perform better in auditory processing, though not significantly. Conversely, transition to perseveration ($\beta$ = 0.31, p = 0.95) was slightly positively associated with AIRTAC but not meaningful
 \begin{figure}[H]
     \centering
     \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/regression_results_airtac.jpg}
     \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
     \label{fig:regression_results_airtac}
 \end{figure}
-For AIRTAC duration discrimination (Figure \ref{fig:regression_results_airtac_dur_discr}), kernel similarity across all three methods (p < 0.05) and internal noise estimated from the old method (p = 0.007) were significantly correlated with duration discrimination. This suggests that patients with high internal noise in double-pass trials may struggle more with distinguishing stimulus duration.
+For AIRTAC duration discrimination (Figure \ref{fig:regression_results_airtac_dur_discr}), kernel similarity across all three methods was significantly correlated with better discrimination (p < 0.05). Additionally, the old internal noise measure was negatively correlated ($\beta$ = -0.82, p = 0.007), but this effect disappears in HMM ($\beta$ = -0.27, p = 0.45), again suggesting that the previous effect may have been driven by perseveration.
 \begin{figure}[H]
     \centering
     \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/regression_results_airtac_dur_discr.jpg}
     \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
     \label{fig:regression_results_airtac_dur_discr}
 \end{figure}
-For AIRTAC intensity discrimination (Figure \ref{fig:regression_results_airtac_int_discr}), only kernel similarities were significantly correlated (p < 0.05), while internal noise estimates were not, suggesting that stimulus-driven processing for intensity discrimination relies more on kernel accuracy than on perceptual noise levels.
+For AIRTAC intensity discrimination (Figure \ref{fig:regression_results_airtac_int_discr}), only kernel similarity showed significant correlations (p < 0.05), while internal noise estimates were not predictive. Transition probabilities were not significantly related, but transition to the engaged state ($\beta$ = 3.89, p = 0.39) had a weak positive association, suggesting that patients who return to engagement more often may have slightly better intensity discrimination.
 \begin{figure}[H]
     \centering
     \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/regression_results_airtac_int_discr.jpg}
@@ -171,14 +176,16 @@ For AIRTAC intensity discrimination (Figure \ref{fig:regression_results_airtac_i
     \label{fig:regression_results_airtac_int_discr}
 \end{figure}
 \subsection {Correlation with other clinical measures} 
-LAMA precision is a measure of auditory attentional abilities, reflecting a participant’s ability to focus on stimulus-driven tasks. The regression results (Figure \ref{fig:regression_results_lama_prec}) reveal a significant correlation between LAMA precision and internal noise estimated from HMM (p = 0.0004). This suggests that after removing perseverative trials, patients can better perform stimulus-driven tasks, highlighting a link between attentional control and reduced internal noise in engaged trials. However, internal noise from the old method was not significantly correlated, reinforcing the idea that attentional abilities are more accurately measured when perseveration is excluded.
+LAMA precision measures auditory attentional control, reflecting a participant’s ability to stay engaged in a stimulus-driven task. The regression results (Figure \ref{fig:regression_results_lama_prec}) show that internal noise from HMM was significantly negatively correlated with LAMA precision ($\beta$ = -0.21, p = 0.0004), this suggests that after removing perseverative trials, patients can better perform stimulus-driven tasks, highlighting a link between attentional control and reduced internal noise in engaged trials.
+
+Interestingly, the old internal noise measure was negatively correlated but not significant ($\beta$ = -0.10, p = 0.24), suggesting that the previously observed effect was amplified by perseveration. Transition probabilities were not significantly related, but transition to the engaged state ($\beta$ = 0.34, p = 0.72) showed a weak positive association. This suggests that after removing perseverative trials, patients can better perform stimulus-driven tasks, highlighting a link between attentional control and reduced internal noise in engaged trials.
 \begin{figure}[H]
     \centering
     \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/regression_results_lama_prec.jpg}
     \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
     \label{fig:regression_results_lama_prec}
 \end{figure}
-For MBEA total scores (melodic perception, Figure \ref{fig:regression_results_mbea_total}), no significant associations were observed (p > 0.05), suggesting that melodic perception does not strongly relate to kernel similarity, internal noise, or transition probabilities.
+For MBEA total scores (Figure \ref{fig:regression_results_mbea_total}), no significant relationships were found with any predictors (p > 0.05). However, the old internal noise measure had a weak positive relationship ($\beta$ = 0.05, p = 0.97), which shifted to a negative trend in HMM ($\beta$ = -1.51, p = 0.45), suggesting that perseveration may have contributed to false positive noise effects in prior estimates.
 
 \begin{figure}[H]
     \centering
@@ -186,7 +193,8 @@ For MBEA total scores (melodic perception, Figure \ref{fig:regression_results_mb
     \caption{Main Title for First Image \\ \small Subtitle for the first graphic.}
     \label{fig:regression_results_mbea_total}
 \end{figure}
-For HADS (anxiety and depression scale, Figure \ref{fig:regression_results_hads}), significant correlations were found with internal noise from HMM (p = 0.003), GLM (p = 0.016), and the old method (p = 0.018), as well as with kernel similarity estimated using HMM (p = 0.029). This suggests that higher internal noise is associated with increased psychological distress, indicating that patients with more perceptual instability may experience greater emotional difficulties. Additionally, the significant correlation with kernel similarity from HMM suggests that after removing perseverative trials, patients with higher anxiety or depression symptoms may still exhibit altered stimulus-driven processing. However, transition probabilities were not significantly related to HADS scores (p > 0.05), reinforcing the idea that psychological distress is more closely linked to perceptual noise and stimulus-driven response stability rather than state-switching behavior.
+For HADS (anxiety and depression scale, Figure \ref{fig:regression_results_hads}), significant correlations were found with internal noise from HMM ($\beta$ = 2.28,p = 0.003), GLM ($\beta$ = 0.95,p = 0.016), and the old method ($\beta$ = 2.30, p = 0.018), as well as with kernel similarity estimated using HMM ($\beta$=-16.31p = 0.029). This suggests that higher internal noise is associated with increased psychological distress, indicating that patients with more perceptual instability may experience greater emotional difficulties. Additionally, the significant correlation with kernel similarity from HMM suggests that after removing perseverative trials, patients with higher anxiety or depression symptoms may still exhibit altered stimulus-driven processing. 
+For transition probabilities, neither transition to perseveration ($\beta$ = -0.62, p = 0.95) nor transition to the engaged state ($\beta$ = -12.80, p = 0.17) were significantly related.
 \begin{figure}[H]
     \centering
     \includegraphics[width=17cm,height=7cm]{MainLayout/Images/chapter8/regression_results_hads.jpg}
